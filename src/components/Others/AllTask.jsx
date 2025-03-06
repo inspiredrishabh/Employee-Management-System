@@ -17,26 +17,31 @@ const AllTask = () => {
         <h2>Completed</h2>
         <h2>Failed</h2>
       </div>
-      <div id='allTask' className='overflow-auto max-h-96' >
-        {authData.employees.map((employee, empIndex) => (
+      <div id='allTask' className='overflow-auto max-h-96'>
+        {authData.employees.map((employee, empIndex) =>
           employee.tasks.map((task, taskIndex) => (
             <div
               key={`${empIndex}-${taskIndex}`}
               className={`mb-2 py-2 px-4 grid grid-cols-5 gap-4 rounded ${
-                task.completed ? 'bg-green-400' 
-                : task.newTask ? 'bg-blue-400' 
-                : task.failed ? 'bg-red-400' 
-                : 'bg-yellow-400'
+                task.completed
+                  ? 'bg-green-400'
+                  : task.newTask
+                  ? 'bg-blue-400'
+                  : task.failed
+                  ? 'bg-red-400'
+                  : task.active
+                  ? 'bg-yellow-400'
+                  : 'bg-gray-400'
               }`}
             >
               <h2>{employee.firstName}</h2>
-              <h2>{task.active ? "Yes" : "No"}</h2>
-              <h2>{task.newTask ? "Yes" : "No"}</h2>
-              <h2>{task.completed ? "Yes" : "No"}</h2>
-              <h2>{task.failed ? "Yes" : "No"}</h2>
+              <h2>{task.active ? 'Yes' : 'No'}</h2>
+              <h2>{task.newTask ? 'Yes' : 'No'}</h2>
+              <h2>{task.completed ? 'Yes' : 'No'}</h2>
+              <h2>{task.failed ? 'Yes' : 'No'}</h2>
             </div>
           ))
-        ))}
+        )}
       </div>
     </div>
   );

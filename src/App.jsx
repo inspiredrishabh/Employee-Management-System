@@ -5,6 +5,7 @@ import EmployeeDashboard from './components/Dashboard/EmployeeDashboard';
 import AdminDashboard from './components/Dashboard/AdminDashboard';
 import { AuthContext } from './context/AuthProvider';
 import { getLocalStorage, setLocalStorage } from './utils/localStorage';
+setLocalStorage();
 
 function App() {
     const [user, setUser] = useState(null);
