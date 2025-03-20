@@ -1,5 +1,8 @@
 # Employee Management System
 
+![Preview](src/assets/ScreenshoT.png)
+![Preview](src/assets/Screenshot.png)
+
 ## Overview
 The **Employee Management System (e.m.system)** is a web-based platform designed to streamline task management within an organization. It features two separate dashboards:
 1. **Admin Dashboard**: Allows administrators to assign tasks to employees and track their progress.
