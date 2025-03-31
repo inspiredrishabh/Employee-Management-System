@@ -97,4 +97,3 @@ Other employee accounts are also available with the same password (123):
    - Green: Completed tasks
    - Red: Failed tasks
 
-## 📁 Project Structure
