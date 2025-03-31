@@ -35,7 +35,7 @@ Employee Management System (EMS) is a web application built with React that prov
 1. Clone the repository:
 
 ```bash
-git clone [repository-url]
+git clone https://github.com/inspiredrishabh/Employee-Management-System
 cd EMS
 ```
 
