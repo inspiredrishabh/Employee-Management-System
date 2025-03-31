@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { getLocalStorage } from '../../utils/localStorage';
+import React, { useState } from "react";
+import { getLocalStorage } from "../../utils/localStorage";
 
 const CreateTask = () => {
-  const [taskTitle, setTaskTitle] = useState('');
-  const [taskDescription, setTaskDescription] = useState('');
-  const [taskDate, setTaskDate] = useState('');
-  const [assignTo, setAssignTo] = useState('');
-  const [category, setCategory] = useState('');
+  const [taskTitle, setTaskTitle] = useState("");
+  const [taskDescription, setTaskDescription] = useState("");
+  const [taskDate, setTaskDate] = useState("");
+  const [assignTo, setAssignTo] = useState("");
+  const [category, setCategory] = useState("");
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -26,19 +26,15 @@ const CreateTask = () => {
     // Retrieve local storage data
     const localData = getLocalStorage();
     if (!localData || !localData.employees) {
-      alert(
-        "Local storage not initialized. Please call setLocalStorage() to seed the data."
-      );
+      alert("Local storage not initialized. Please refresh the page.");
       return;
     }
 
     let employees = localData.employees;
-    console.log("Current employees data:", employees);
 
     // Find employee by first name (case-insensitive)
     const employeeIndex = employees.findIndex(
-      (emp) =>
-        emp.firstName.toLowerCase() === assignTo.trim().toLowerCase()
+      (emp) => emp.firstName.toLowerCase() === assignTo.trim().toLowerCase()
     );
 
     if (employeeIndex === -1) {
@@ -64,15 +60,32 @@ const CreateTask = () => {
     }
 
     // Save the updated data back to local storage
-    localStorage.setItem('employees', JSON.stringify(employees));
-    console.log("Employee updated:", employees[employeeIndex]);
+    localStorage.setItem("employees", JSON.stringify(employees));
 
-    // Optionally, reset the form fields
-    setTaskTitle('');
-    setTaskDescription('');
-    setTaskDate('');
-    setAssignTo('');
-    setCategory('');
+    // Update any logged in user data if this task was for the current user
+    const loggedInUser = JSON.parse(
+      localStorage.getItem("loggedInUser") || "{}"
+    );
+    if (
+      loggedInUser.role === "employee" &&
+      loggedInUser.data &&
+      loggedInUser.data.firstName.toLowerCase() ===
+        assignTo.trim().toLowerCase()
+    ) {
+      loggedInUser.data = employees[employeeIndex];
+      localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
+    }
+
+    alert(
+      `Task assigned to ${employees[employeeIndex].firstName} successfully!`
+    );
+
+    // Reset the form fields
+    setTaskTitle("");
+    setTaskDescription("");
+    setTaskDate("");
+    setAssignTo("");
+    setCategory("");
   };
 
   return (
@@ -95,18 +108,18 @@ const CreateTask = () => {
                 type="text"
                 className="w-full p-2 border border-gray-600 rounded bg-gray-700 text-white"
                 placeholder="Make a UI Design"
+                required
               />
             </div>
 
             <div className="mb-4">
-              <label className="block text-gray-400 font-bold mb-2">
-                Date
-              </label>
+              <label className="block text-gray-400 font-bold mb-2">Date</label>
               <input
                 value={taskDate}
                 onChange={(e) => setTaskDate(e.target.value)}
                 type="date"
                 className="w-full p-2 border border-gray-600 rounded bg-gray-700 text-white"
+                required
               />
             </div>
 
@@ -120,6 +133,7 @@ const CreateTask = () => {
                 type="text"
                 className="w-full p-2 border border-gray-600 rounded bg-gray-700 text-white"
                 placeholder="Employee Name"
+                required
               />
             </div>
 
@@ -133,6 +147,7 @@ const CreateTask = () => {
                 type="text"
                 className="w-full p-2 border border-gray-600 rounded bg-gray-700 text-white"
                 placeholder="Design, Dev, etc"
+                required
               />
             </div>
           </div>
@@ -148,6 +163,7 @@ const CreateTask = () => {
                 className="w-full p-2 border border-gray-600 rounded bg-gray-700 text-white"
                 rows="10"
                 placeholder="Describe the task..."
+                required
               ></textarea>
             </div>
           </div>
